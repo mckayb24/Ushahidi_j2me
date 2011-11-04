@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import javax.microedition.io.file.FileSystemRegistry;
 import org.json.me.JSONException;
 import ushahidi.core.I18N;
+import ushahidi.core.LabelInfo;
 
 /**
  * Dashboard Form
@@ -20,14 +21,19 @@ import ushahidi.core.I18N;
  */
 public class Dashboard extends Base {
 
+    private LabelInfo lInfo;
+
     public Dashboard(final App app) {
         super(I18N.s("ushahidi"));
+        lInfo = new LabelInfo();
+        
         setLayout(new BorderLayout());
 
+        this.setTitle(lInfo.getTitle());
         //CONTAINER
         Container container = createdBoxLayout();
         //LOGO
-        container.addComponent(createImageLabel("/ushahidi/res/logo.png"));
+        container.addComponent(createImageLabel(lInfo.getLogo()));
         //ADD REPORT
         container.addComponent(createButton(I18N.s("add_report"), new ActionListener() {
             public void actionPerformed(ActionEvent ae) {

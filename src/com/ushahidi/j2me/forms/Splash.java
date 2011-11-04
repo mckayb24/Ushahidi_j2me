@@ -9,6 +9,7 @@ import com.ushahidi.j2me.App;
 import java.util.Timer;
 import java.util.TimerTask;
 import ushahidi.core.I18N;
+import ushahidi.core.LabelInfo;
 
 /**
  *
@@ -17,12 +18,16 @@ import ushahidi.core.I18N;
 public class Splash extends Base {
 
     private App app;
+    private LabelInfo lInfo;
+
     public Splash(final App app) {
         super(null);
         this.app = app;
+        lInfo = new LabelInfo();
+
         setLayout(new BorderLayout());
 
-        getStyle().setBgImage(createImage("/ushahidi/res/splash.jpg"));
+        getStyle().setBgImage(createImage(lInfo.getSplash()));
 
         Command exit = new Command(I18N.s("exit"));
         addCommand(exit);
