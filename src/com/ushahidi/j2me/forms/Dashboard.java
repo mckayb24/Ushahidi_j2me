@@ -30,10 +30,11 @@ public class Dashboard extends Base {
         setLayout(new BorderLayout());
 
         this.setTitle(lInfo.getTitle());
+
         //CONTAINER
         Container container = createdBoxLayout();
         //LOGO
-        container.addComponent(createImageLabel(lInfo.getLogo()));
+        container.addComponent(createImageLabel("/ushahidi/res/"+lInfo.getLogo()+".png"));
         //ADD REPORT
         container.addComponent(createButton(I18N.s("add_report"), new ActionListener() {
             public void actionPerformed(ActionEvent ae) {

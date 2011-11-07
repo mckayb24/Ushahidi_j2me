@@ -15,22 +15,25 @@ import java.io.IOException;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
 import javax.microedition.midlet.*;
+import ushahidi.core.LabelInfo;
 
 /**
  * @author dalezak
  */
 public class Ushahidi extends MIDlet implements App {
     private ushahidi.core.Settings settings;
+    private LabelInfo lInfo;
 
     public Ushahidi() {
         settings = new ushahidi.core.Settings();
+        lInfo = new LabelInfo();
     }
 
     public void startApp() {
         Display.init(this);
         try {
-            Resources resources = Resources.open("/res/Ushahidi.res");
-            UIManager.getInstance().setThemeProps(resources.getTheme("Ushahidi"));
+            Resources resources = Resources.open("/res/"+lInfo.getTheme()+".res");
+            UIManager.getInstance().setThemeProps(resources.getTheme(lInfo.getTheme()));
          }
          catch(IOException ex) {
              new Alert("UIManager error", ex.getMessage(), null, AlertType.ERROR).setTimeout(50);

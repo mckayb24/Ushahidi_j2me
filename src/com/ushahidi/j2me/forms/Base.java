@@ -14,17 +14,22 @@ import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.layouts.BoxLayout;
 import com.sun.lwuit.list.DefaultListModel;
 import java.io.IOException;
+import ushahidi.core.LabelInfo;
 
 /**
  * Base Form
  * @author dalezak
  */
 public abstract class Base extends Form {
-
+    private LabelInfo lInfo;
     
     public Base(String title) {
         super(title);
         removeAll();
+        lInfo = new LabelInfo();
+
+//        this.getStyle().setBgColor(lInfo.getBgColor());
+//        this.getTitleStyle().setBgColor(lInfo.getBarColor());
     }
 
     protected Button createButton(String text, ActionListener listener) {

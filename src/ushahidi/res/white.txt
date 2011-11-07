@@ -1,0 +1,6 @@
+logo bunny
+splash Einstein
+title Brett
+bgColor 1139573
+barcolor 400836
+theme Ushahidi

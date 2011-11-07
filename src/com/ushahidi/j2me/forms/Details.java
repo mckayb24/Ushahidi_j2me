@@ -8,6 +8,7 @@ import com.sun.lwuit.events.ActionEvent;
 
 import com.sun.lwuit.events.ActionListener;
 import ushahidi.core.I18N;
+import ushahidi.core.LabelInfo;
 
 /**
  * Details Form

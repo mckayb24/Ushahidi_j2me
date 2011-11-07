@@ -27,7 +27,7 @@ public class Splash extends Base {
 
         setLayout(new BorderLayout());
 
-        getStyle().setBgImage(createImage(lInfo.getSplash()));
+        getStyle().setBgImage(createImage("/ushahidi/res/"+lInfo.getSplash()+".jpg"));
 
         Command exit = new Command(I18N.s("exit"));
         addCommand(exit);

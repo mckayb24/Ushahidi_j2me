@@ -33,6 +33,7 @@ import javax.microedition.media.*;
 import javax.microedition.media.control.*;
 
 import ushahidi.core.I18N;
+import ushahidi.core.LabelInfo;
 
 
 /**
@@ -51,6 +52,7 @@ public class Ushahidi extends MIDlet  {
     private String[] categoryIncidentTitles = {};
     private  String[] categoryNames = {};
     private Settings settings;
+    private LabelInfo lInfo;
     private API api = null;
     private DefaultListModel incidentListModel = null;
     private Form cameraForm;
@@ -72,13 +74,14 @@ public class Ushahidi extends MIDlet  {
          */
         settings = new Settings();
         api = new API();
+        lInfo = new LabelInfo();
     }
 
     public void startApp() {
          Display.init(this);
         try {
-            Resources res = Resources.open("/res/Ushahidi.res");
-            UIManager.getInstance().setThemeProps(res.getTheme("Ushahidi"));
+            Resources resources = Resources.open("/res/"+lInfo.getTheme()+".res");
+            UIManager.getInstance().setThemeProps(resources.getTheme(lInfo.getTheme()));
          }
          catch(IOException ex) {
              Alert uiManAlert = new Alert("UIManager error", ex.getMessage(), null, AlertType.ERROR);

@@ -8,6 +8,7 @@ import com.sun.lwuit.layouts.BorderLayout;
 
 import com.ushahidi.j2me.App;
 import ushahidi.core.I18N;
+import ushahidi.core.LabelInfo;
 
 /**
  * Settings Form
@@ -19,6 +20,7 @@ public class Settings extends Base {
 
     public Settings(final App app) {
         super(I18N.s("settings"));
+
         setLayout(new BorderLayout());
         
         String[] userSetting = settings.getSettings();
