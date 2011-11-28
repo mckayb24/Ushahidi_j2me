@@ -95,7 +95,7 @@ public class Ushahidi extends MIDlet  {
     }
 
     public void destroyApp(boolean unconditional) {
-        settings.saveDeployment();
+        //settings.saveDeployment();
         notifyDestroyed();
     }
 
@@ -294,7 +294,7 @@ public class Ushahidi extends MIDlet  {
             public void actionPerformed(ActionEvent ae) {
                 // Save settings
                 //settings.getDeploymentByName(instanceComboBox.getSelectedItem());
-                settings.saveSettings(instanceComboBox.getSelectedIndex(), reportsTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText());
+                settings.saveSettings(/*instanceComboBox.getSelectedIndex(), reportsTextField.getText(),*/ firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText());
 
                 // Prefetch any data that may take long to retrieve
 //                if (isConnected())
@@ -333,7 +333,7 @@ public class Ushahidi extends MIDlet  {
              public void actionPerformed(ActionEvent ev) {
                  //Call function to save settings
                  //settings.getDeploymentByName(instanceComboBox.getSelectedItem());
-                 settings.saveSettings(instanceComboBox.getSelectedIndex(), reportsTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText());
+                 settings.saveSettings(/*instanceComboBox.getSelectedIndex(), reportsTextField.getText(),*/ firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText());
 
                  // Prefetch any data that may take long to retrieve
                  if(Dialog.show("Restart", "A restart is needed to load selected"

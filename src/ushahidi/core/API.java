@@ -82,7 +82,7 @@ public class API implements Runnable {
 
         String deployment = API.getDeployment();
         String url = (deployment.endsWith("/"))? deployment.concat("api") : deployment.concat("/api");
-        String [] setting = (new Settings()).getSettings();        
+        String [] setting = (new Settings()).getSettings();
         String data = "";
         
         // Retrieve Geographical co-ordianates i.e. latitude and longitude
@@ -105,9 +105,9 @@ public class API implements Runnable {
             "&latitude="+geoCoordinates[0],
             "&longitude="+geoCoordinates[1],
             "&location_name="+incident_location,
-            "&person_first="+setting[2],
-            "&person_last="+setting[3],
-            "&person_email="+setting[4],
+            "&person_first="+setting[0],
+            "&person_last="+setting[1],
+            "&person_email="+setting[2],
             "&resp=xml"
         };
 

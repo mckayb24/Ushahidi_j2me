@@ -12,6 +12,7 @@ import com.sun.lwuit.events.ActionListener;
 import com.sun.lwuit.layouts.BorderLayout;
 import com.ushahidi.j2me.App;
 import ushahidi.core.I18N;
+import ushahidi.core.Settings;
 
 /**
  *
@@ -19,6 +20,8 @@ import ushahidi.core.I18N;
  */
 public class AddDeployment extends Base 
 {
+    private Settings settings = new Settings();
+
     public AddDeployment(final App app)
     {
         super(I18N.s("Add Deployment"));
@@ -35,8 +38,17 @@ public class AddDeployment extends Base
         addComponent(BorderLayout.CENTER, container);
         //Save
         container.addComponent(createButton(I18N.s("Save"), new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
+            public void actionPerformed(ActionEvent ae)
+            {
+                settings.saveDeployment(addDeployText.getText());
+                if (Dialog.show(I18N.s("restart"), "A restart is needed to load selected instance. Would you wish to exit the application now?", I18N.s("yes"), I18N.s("no")))
+                {
+                    app.exit();
+                }
+                else
+                {
+                    app.showSettings(false);
+                }
             }
         }));
 

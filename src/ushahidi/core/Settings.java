@@ -31,15 +31,45 @@ public class Settings {
         return store;
     }
 
-    public int saveSettings(int index, String numberOfReports, String firstName, String lastName, String email) {
+
+
+    public int saveDeployment(String deployment)
+    {
+        RecordStore rs = null;
+        int recordID = 0;
+        try
+        {
+            rs = getRecordStore("DeployDB");
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            DataOutputStream writer = new DataOutputStream(byteStream);
+            writer.writeUTF(deployment);
+            writer.flush();
+
+            byte[] record = byteStream.toByteArray();
+            if (rs.getNumRecords() == 0)
+                recordID = rs.addRecord(record, 0, record.length);
+            else rs.setRecord(1, record, 0, record.length);
+
+            writer.close();
+            byteStream.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
+        finally
+        {
+            closeRecordStore(rs);
+        }
+        return recordID;
+    }
+    public int saveSettings(String firstName, String lastName, String email) {
         RecordStore rs = null;
         int recordID = 0;
         try {
             rs = getRecordStore("SettingsDB");
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             DataOutputStream writer = new DataOutputStream(byteStream);
-            writer.writeUTF(String.valueOf(index)); // Instance address -> Index in ComboBox
-            writer.writeUTF(numberOfReports); // Number of reports
             writer.writeUTF(firstName); // First name
             writer.writeUTF(lastName); //Last Name
             writer.writeUTF(email); // E-mail address
@@ -62,6 +92,41 @@ public class Settings {
         return recordID;
     }
 
+    public String[] getDeployment()
+    {
+        ByteArrayInputStream inputByteStream;
+        DataInputStream reader;
+        String[] deployments = null;
+        try
+        {
+            RecordStore rs = getRecordStore("DeployDB");
+
+            try
+            {
+                byte[] settings = rs.getRecord(1);
+                inputByteStream = new ByteArrayInputStream(settings);
+                reader = new DataInputStream(inputByteStream);
+
+                if(rs.getNumRecords() != 0)
+                {
+                    deployments = new String[1];
+
+                    deployments[0] = reader.readUTF();
+                }
+            }
+            catch (InvalidRecordIDException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+        catch (RecordStoreNotOpenException ex) {
+            System.err.println(ex);
+        }
+        catch (Exception ex) {
+            System.err.println(ex);
+        }
+        return deployments;
+    }
+    
     public String[] getSettings() {
         ByteArrayInputStream inputByteStream;
         DataInputStream reader;
@@ -75,13 +140,11 @@ public class Settings {
                 reader = new DataInputStream(inputByteStream);
 
                 if (rs.getNumRecords()  != 0) {
-                    userSetting = new String[5];
+                    userSetting = new String[3];
 
-                    userSetting[0] = reader.readUTF(); // Instance address
-                    userSetting[1] = reader.readUTF(); // Number of reports
-                    userSetting[2] = reader.readUTF(); // First name
-                    userSetting[3] = reader.readUTF(); //Last Name
-                    userSetting[4] = reader.readUTF(); // E-mail address
+                    userSetting[0] = reader.readUTF(); // First name
+                    userSetting[1] = reader.readUTF(); //Last Name
+                    userSetting[2] = reader.readUTF(); // E-mail address
                 } //end if
 
             }
@@ -142,37 +205,6 @@ public class Settings {
         }
 
         return titles;
-    }
-
-    public int saveDeployment() {
-        RecordStore rs = null;
-        int recordID = 0;
-        try {
-            rs = getRecordStore("Deployment");
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            DataOutputStream writer = new DataOutputStream(byteStream);
-            writer.writeUTF(API.getDeployment()); // Address of active Instance
-            writer.flush();
-
-            byte[] record = byteStream.toByteArray();
-
-            if (rs.getNumRecords() == 0) {
-                recordID = rs.addRecord(record, 0, record.length);
-            }
-            else {
-                rs.setRecord(1, record, 0, record.length);
-            }
-
-            writer.close();
-            byteStream.close();
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        finally {
-            closeRecordStore(rs);
-        }
-        return recordID;
     }
 
     private void closeRecordStore(RecordStore recordStore) {
