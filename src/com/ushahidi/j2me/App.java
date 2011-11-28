@@ -20,6 +20,8 @@ public interface App {
 
     public void showSynchronize(boolean backward);
 
+    public void showAddDeploy(boolean backward);
+
     public void showCreate(boolean backward);
 
     public ushahidi.core.Settings getSettings();

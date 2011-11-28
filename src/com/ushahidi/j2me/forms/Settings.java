@@ -102,7 +102,7 @@ public class Settings extends Base {
         });
         addCommand(new Command(I18N.s("add_deployment")) {
             public void actionPerformed(ActionEvent ev) {
-                //app.showCreate(true);
+                app.showAddDeploy(true);
             }
         });
 

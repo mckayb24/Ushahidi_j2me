@@ -4,6 +4,7 @@ import com.sun.lwuit.Display;
 import com.sun.lwuit.animations.CommonTransitions;
 import com.sun.lwuit.plaf.UIManager;
 import com.sun.lwuit.util.Resources;
+import com.ushahidi.j2me.forms.AddDeployment;
 import com.ushahidi.j2me.forms.Dashboard;
 import com.ushahidi.j2me.forms.Details;
 import com.ushahidi.j2me.forms.Reports;
@@ -96,5 +97,11 @@ public class Ushahidi extends MIDlet implements App {
 
     public ushahidi.core.Settings getSettings() {
         return settings;
+    }
+
+    public void showAddDeploy(boolean forward) {
+        AddDeployment addDeployment = new AddDeployment(this);
+        addDeployment.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, !forward, 500));
+        addDeployment.show();
     }
 }
