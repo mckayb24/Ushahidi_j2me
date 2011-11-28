@@ -1,193 +1,76 @@
 package com.ushahidi.j2me.models;
 
-import org.json.me.JSONException;
+import java.util.Vector;
+
 
 /**
  * Report Model
  * @author dalezak
  */
-public class Report extends Model {
+public class Report
+{
+    private String title;
+    private String description;
+    private String date;
+    private String city;
+    private Vector categories;
 
-    public Report() {
-        super();
+    public Report()
+    {
+        title = "default";
+        description = "default";
+        date = "default";
+        city = "default";
+        categories = new Vector();
     }
 
-    protected Report(String json) throws JSONException {
-        super(json);
+    public String getTitle()
+    {
+        return title;
     }
 
-    public static Report load(String path) {
-        try {
-            return new Report(fromString(path));
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public String getDescription()
+    {
+        return description;
     }
 
-    public boolean save() {
-        return save("file:///" + getDefaultRoot() + getID() + ".txt");
+    public String getDate()
+    {
+        return date;
     }
 
-    public int getID() {
-        try {
-            return getInt("id");
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return 0;
+    public String getCity()
+    {
+        return city;
     }
 
-    public void setID(int id) {
-        try {
-            put("id", id);
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
+    public Vector getCategory()
+    {
+        return categories;
     }
 
-    public String getDate() {
-        try {
-            return getString("date");
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public void setTitle(String newTitle)
+    {
+        title = newTitle;
     }
 
-    public void setDate(String date) {
-        try {
-            put("date", date);
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
+    public void setDescription(String newDescription)
+    {
+        description = newDescription;
     }
 
-    public String getTitle() {
-        try {
-            return getString("title");
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public void setDate(String newDate)
+    {
+        date = newDate;
     }
 
-    public void setTitle(String title) {
-        try {
-            put("title", title);
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public String getLocation() {
-        try {
-            return getString("description");
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public void setCity(String newCity)
+    {
+        city = newCity;
     }
 
-    public void setLocation(String location) {
-        try {
-            put("location", location);
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public String getDescription() {
-        try {
-            return getString("description");
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    public void setDescription(String description) {
-        try {
-            put("description", description);
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
-//
-//    public Image getMap() {
-//        return map;
-//    }
-//
-//    public void setMap(Image map) {
-//        this.map = map;
-//    }
-//
-//    public Image[] getPhotos() {
-//        return photos;
-//    }
-//
-//    public void setPhotos(Image[] photos) {
-//        this.photos = photos;
-//    }
-//
-//    public Image getPhoto(int index) {
-//        return photos != null && photos.length > index ? photos[index] : null;
-//    }
-//
-//    public int getPhotoCount() {
-//        return 0;
-//    }
-
-//    public String getCoordinates() {
-//        return latitude != null && longitude != null ? latitude + "," + longitude : null;
-//    }
-
-    public String getLatitude() {
-        try {
-            return getString("latitude");
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    public void setLatitude(String latitude) {
-        try {
-            put("latitude", latitude);
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public String getLongitude() {
-        try {
-            return getString("longitude");
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    public void setLongitude(String longitude) {
-        try {
-            put("longitude", longitude);
-        }
-        catch (JSONException ex) {
-            ex.printStackTrace();
-        }
+    public void addCategory(String newCategory)
+    {
+        categories.addElement(newCategory);
     }
 }

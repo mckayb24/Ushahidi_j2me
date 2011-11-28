@@ -31,7 +31,7 @@ public class Details extends Base {
         container.addComponent(createTextArea(report.getDescription(), false));
 
         container.addComponent(createLabel(I18N.s("location")));
-        container.addComponent(createTextField(report.getLocation(), false));
+        //container.addComponent(createTextField(report.getLocation(), false));
         //container.addComponent(createTextField(report.getCoordinates(), false));
 
 //        container.addComponent(createLabel(I18N.s("map")));

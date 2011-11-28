@@ -10,7 +10,9 @@ import com.sun.lwuit.list.DefaultListModel;
 
 import com.ushahidi.j2me.App;
 import com.ushahidi.j2me.models.Database;
+import ushahidi.core.Instance;
 
+import java.util.Vector;
 import ushahidi.core.I18N;
 
 /**
@@ -18,33 +20,38 @@ import ushahidi.core.I18N;
  * @author dalezak
  */
 public class Reports extends Base {
+    //private Instance incidents;
+    private Vector reportVec;
 
-    public Reports(final App app) {
+    public Reports(final App app, List reportList) {
         super(I18N.s("Reports"));
         setLayout(new BorderLayout());
-        setScrollable(false);
-        
+        //incidents = new Instance();
         Container container = createdBoxLayout();
 
-        final DefaultListModel reportModel = createModel(Database.getInstance().getReportNames());
-        final List reports = createList(reportModel);
-        reports.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                int index = reportModel.getSelectedIndex();
-                new Details(app, Database.getInstance().getReport(index)).show();
+//        System.out.println("the size is "+incidents.getsize());
+//        for(int i = 0; i < incidents.getsize(); i++)
+//        {
+//            reportVec.addElement(incidents.getTitle(i));
+//        }
+//
+        //reportList = new List(reportVec);
+        reportList.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent ae)
+        {
+            String temp = new String(ae.getSource().toString().substring(121, 125));
+            int i = 0;
+            while((temp.charAt(i) >= '0')&&(temp.charAt(i) <= '9'))
+            {
+                i++;
             }
-        });
 
-        final ComboBox categories = createComboBox(Database.getInstance().getCategoryNames());
-        categories.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                //TODO load reports by category
-            }
+            app.showReport(true, (app.getAReport(Integer.parseInt(temp.substring(0,i)))));
+             //new Report(this, Integer.parseInt(temp.substring(0, i)));
+        }
         });
-
-        container.addComponent(categories);
-        container.addComponent(reports);
-        addComponent(BorderLayout.NORTH, container);
+        container.addComponent(reportList);
+        addComponent(BorderLayout.CENTER, container);
 
         Command back = new Command(I18N.s("back"));
         addCommand(back);
@@ -57,8 +64,7 @@ public class Reports extends Base {
         
         addCommand(new Command(I18N.s("view")) {
             public void actionPerformed(ActionEvent ev) {
-                int index = reportModel.getSelectedIndex();
-                app.showDetails(true, Database.getInstance().getReport(index));
+                
             }
         });
     }
