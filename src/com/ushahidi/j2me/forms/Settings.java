@@ -56,7 +56,7 @@ public class Settings extends Base {
         container.addComponent(createLabel(I18N.s("deployment")));
         deployments.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                settings.getDeploymentByName(deployments.getSelectedItem());
+                //settings.getDeploymentByName(deployments.getSelectedItem());
                 settings.saveSettings(deployments.getSelectedIndex(), reports.getText(), firstName.getText(), lastName.getText(), email.getText());
             }
         });
@@ -90,7 +90,7 @@ public class Settings extends Base {
         });
         addCommand(new Command(I18N.s("save")) {
             public void actionPerformed(ActionEvent ev) {
-                settings.getDeploymentByName(deployments.getSelectedItem());
+                //settings.getDeploymentByName(deployments.getSelectedItem());
                 settings.saveSettings(deployments.getSelectedIndex(), reports.getText(), firstName.getText(), lastName.getText(), email.getText());
                 if (Dialog.show(I18N.s("restart"), "A restart is needed to load selected instance. Would you wish to exit the application now?", I18N.s("yes"), I18N.s("no"))) {
                     app.exit();

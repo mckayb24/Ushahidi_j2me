@@ -31,29 +31,6 @@ public class Settings {
         return store;
     }
 
-    public void setUshahidiDeployment() {
-        RecordStore rs = null;
-        String deployment = null;
-
-        try {
-            rs = getRecordStore("Deployment");
-            if (rs.getNumRecords() == 0) {
-                deployment = "http://demo.ushahidi.com";
-                saveInstance("Demo", "http://demo.ushahidi.com");
-            }
-            else {
-                deployment = this.getDeployment();
-            }
-
-        }
-        catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
-        finally {
-            API.setDeployment(deployment);
-        }
-    }
-
     public int saveSettings(int index, String numberOfReports, String firstName, String lastName, String email) {
         RecordStore rs = null;
         int recordID = 0;
@@ -121,35 +98,6 @@ public class Settings {
         return userSetting;
     }
 
-    public int saveInstance(String instanceTitle, String instanceAddress) {
-        RecordStore rs = null;
-        int recordID = 0;
-
-        try {
-            rs = getRecordStore("InstancesDB");
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            DataOutputStream writer = new DataOutputStream(byteStream);
-
-            writer.writeUTF(instanceTitle); // Instance name
-            writer.writeUTF(instanceAddress); // Instance address
-            writer.flush();
-
-            byte[] record = byteStream.toByteArray();
-            recordID = rs.addRecord(record, 0, record.length);
-
-            writer.close();
-            byteStream.close();
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        finally {
-            closeRecordStore(rs);
-        }
-        
-        return recordID;
-    }
-
     public Vector getAllInstances() {
         Vector instances = new Vector();
 //        String activeInstance = null;
@@ -196,18 +144,6 @@ public class Settings {
         return titles;
     }
 
-    public void getDeploymentByName(Object name) {
-        String url = null;
-        Vector instances = getAllInstances();
-
-        for (int i = 0; i < instances.size(); i++) {
-            String[] instance = (String[]) instances.elementAt(i);
-            if (instance[0].equals(name)) url = instance[1];
-        }
-
-        API.setDeployment(url);
-    }
-
     public int saveDeployment() {
         RecordStore rs = null;
         int recordID = 0;
@@ -237,30 +173,6 @@ public class Settings {
             closeRecordStore(rs);
         }
         return recordID;
-    }
-
-    public String getDeployment() {
-        String currentInstance = null;
-        ByteArrayInputStream byteStream = null;
-        DataInputStream reader = null;
-        RecordStore rs = null;
-
-        try {
-            rs = getRecordStore("Deployment");
-
-            byte[] data = rs.getRecord(1);
-            byteStream = new ByteArrayInputStream(data);
-            reader = new DataInputStream(byteStream);
-            currentInstance = reader.readUTF().toString();
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        finally {
-            closeRecordStore(rs);
-        }
-
-        return currentInstance;
     }
 
     private void closeRecordStore(RecordStore recordStore) {

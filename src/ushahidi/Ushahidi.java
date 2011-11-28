@@ -293,7 +293,7 @@ public class Ushahidi extends MIDlet  {
 
             public void actionPerformed(ActionEvent ae) {
                 // Save settings
-                settings.getDeploymentByName(instanceComboBox.getSelectedItem());
+                //settings.getDeploymentByName(instanceComboBox.getSelectedItem());
                 settings.saveSettings(instanceComboBox.getSelectedIndex(), reportsTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText());
 
                 // Prefetch any data that may take long to retrieve
@@ -332,7 +332,7 @@ public class Ushahidi extends MIDlet  {
          settingsForm.addCommand(new Command("Save") {
              public void actionPerformed(ActionEvent ev) {
                  //Call function to save settings
-                 settings.getDeploymentByName(instanceComboBox.getSelectedItem());
+                 //settings.getDeploymentByName(instanceComboBox.getSelectedItem());
                  settings.saveSettings(instanceComboBox.getSelectedIndex(), reportsTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), emailTextField.getText());
 
                  // Prefetch any data that may take long to retrieve
@@ -547,11 +547,11 @@ public class Ushahidi extends MIDlet  {
         
         instance.addCommand(new Command("Submit") {
             public void actionPerformed(ActionEvent ev) {
-                int id = settings.saveInstance(instanceName.getText(), instanceURL.getText());
-                if ( id > 0 ) {
-                    instanceName.setText("");
-                    instanceURL.setText("");
-                } //end if
+                //int id = settings.saveInstance(instanceName.getText(), instanceURL.getText());
+//                if ( id > 0 ) {
+//                    instanceName.setText("");
+//                    instanceURL.setText("");
+//                } //end if
             }
         });
         
@@ -566,7 +566,6 @@ public class Ushahidi extends MIDlet  {
     //<editor-fold defaultstate="collapsed" desc="Connection test">
     private boolean isConnected() {
         boolean connected = false;
-        settings.setUshahidiDeployment();
         switch(api.isConnectionAvailable()) {
             case 200:
                 connected = true;
