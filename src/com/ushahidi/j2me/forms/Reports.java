@@ -17,39 +17,47 @@ import ushahidi.core.I18N;
 
 /**
  * Reports Form
- * @author dalezak
+ * @author dalezak and Brett McKay
  */
 public class Reports extends Base {
-    //private Instance incidents;
     private Vector reportVec;
 
+    /**
+     * This method creates an instance of the Reports class.
+     * The Reports class creates a form to display the
+     * title of all the reports
+     * Each title can be clicked on to display
+     * that reports details
+     * @post Creates an instance of the Reports class
+     * @param App app
+     * @param List reportList : this is a list with all the report titles
+     */
     public Reports(final App app, List reportList) {
         super(I18N.s("Reports"));
         setLayout(new BorderLayout());
-        //incidents = new Instance();
         Container container = createdBoxLayout();
 
-//        System.out.println("the size is "+incidents.getsize());
-//        for(int i = 0; i < incidents.getsize(); i++)
-//        {
-//            reportVec.addElement(incidents.getTitle(i));
-//        }
-//
-        //reportList = new List(reportVec);
+        //if a list selection is clicked
+        //displays the details of the selected report in a new form
         reportList.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent ae)
         {
-            String temp = new String(ae.getSource().toString().substring(121, 125));
-            int i = 0;
-            while((temp.charAt(i) >= '0')&&(temp.charAt(i) <= '9'))
+            String temp = new String(ae.getSource().toString().substring(118, 128));
+
+            //finds the index of the selected list item
+            String num = new String("0");
+            for(int i = 0; i < temp.length(); i++)
             {
-                i++;
+                if((temp.charAt(i) >= '0')&&(temp.charAt(i) <= '9'))
+                {
+                    num = num.concat(temp.substring(i, i+1));
+                }
             }
 
-            app.showReport(true, (app.getAReport(Integer.parseInt(temp.substring(0,i)))));
-             //new Report(this, Integer.parseInt(temp.substring(0, i)));
+            app.showReport(true, (app.getAReport(Integer.parseInt(num))));
         }
         });
+
         container.addComponent(reportList);
         addComponent(BorderLayout.CENTER, container);
 

@@ -73,23 +73,27 @@ public class Ushahidi extends MIDlet implements App {
         dashboard.show();
     }
 
+    /**
+     * displays the form with all of the report titles
+     * @param boolean backward : tells the transition which way to slide
+     */
     public void showReports(boolean forward) {
         Reports reports = new Reports(this, this.getReportTitles());
         reports.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, !forward, 500));
         reports.show();
     }
 
+    /**
+     * displays the form with the report details
+     * @param boolean backward : tells the transition which way to slide
+     * @param Report report : the report that will be displayed
+     */
     public void showReport(boolean forward, Report newReport)
     {
         ReportForm report = new ReportForm(this, newReport);
         report.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, !forward, 500));
         report.show();
     }
-//    public void showDetails(boolean forward, Report report) {
-//        Details details = new Details(this, report);
-//        details.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, !forward, 500));
-//        details.show();
-//    }
 
     public void showSettings(boolean forward) {
         Settings settings = new Settings(this);
@@ -104,13 +108,16 @@ public class Ushahidi extends MIDlet implements App {
     }
 
     public void showCreate(boolean forward) {
-        //new Report(this).show();
     }
 
     public ushahidi.core.Settings getSettings() {
         return settings;
     }
 
+    /**
+     * displays the form where a new deployment is entered
+     * @param boolean backward : tells the transition which way to slide
+     */
     public void showAddDeploy(boolean forward) {
         AddDeployment addDeployment = new AddDeployment(this);
         addDeployment.setTransitionInAnimator(CommonTransitions.createSlide(CommonTransitions.SLIDE_HORIZONTAL, !forward, 500));
@@ -131,6 +138,11 @@ public class Ushahidi extends MIDlet implements App {
         return reportList;
     }
 
+    /**
+     * gets the report located at index
+     * @param int index
+     * @pre index > 0 && index < number of reports
+     */
     public Report getAReport(int index)
     {
         return incidents.getReport(index);

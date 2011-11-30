@@ -12,7 +12,7 @@ import ushahidi.core.LabelInfo;
 
 /**
  * Settings Form
- * @author dalezak
+ * @author dalezak and Brett McKay
  */
 public class Settings extends Base {
 
@@ -25,6 +25,8 @@ public class Settings extends Base {
         
         String[] userSetting = settings.getSettings();
         String[] deployTitles;
+
+        //checks if there is a deployment
         if(settings.getDeployment() != null)
         {
             deployTitles = settings.getDeployment();
@@ -34,10 +36,12 @@ public class Settings extends Base {
             deployTitles = new String[1];
             deployTitles[0] = "";
         }
+
         Container container = createdBoxLayout();
 
         final ComboBox languages = createComboBox();
         final TextField reports = createTextField();
+        //initializes combo box with all the deployments
         final ComboBox deployments = createComboBox(deployTitles);
         final TextField firstName = createTextField();
         final TextField lastName = createTextField();
@@ -52,17 +56,14 @@ public class Settings extends Base {
         container.addComponent(createLabel(I18N.s("language")));
         languages.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                //settings.getDeploymentByName(deployments.getSelectedItem());
-                //settings.saveSettings(deployments.getSelectedIndex(), reports.getText(), firstName.getText(), lastName.getText(), email.getText());
             }
         });
         container.addComponent(languages);
 
-        //DEPLOYMENT
+        //eventually used to choose a deployment
         container.addComponent(createLabel(I18N.s("deployment")));
         deployments.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                //settings.saveSettings(firstName.getText(), lastName.getText(), email.getText());
             }
         });
         container.addComponent(deployments);

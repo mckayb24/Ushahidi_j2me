@@ -16,12 +16,18 @@ import ushahidi.core.Settings;
 
 /**
  *
- * @author user
+ * @author Brett McKay
  */
 public class AddDeployment extends Base 
 {
     private Settings settings = new Settings();
 
+    /**
+     * This method creates an instance of the addDeployment class.
+     * The AddDeployment class creates a form
+     * where the user can save a deployment to the record store
+     * @post Creates an instance of the AddDeployment class
+     */
     public AddDeployment(final App app)
     {
         super(I18N.s("Add Deployment"));
@@ -29,14 +35,16 @@ public class AddDeployment extends Base
         setLayout(new BorderLayout());
         
         Container container = createdBoxLayout();
-        
+
+        //creates a textfield initialized with http:
         final TextField addDeployText = createTextField();
         addDeployText.setText("http://");
 
         container.addComponent(addDeployText);
 
         addComponent(BorderLayout.CENTER, container);
-        //Save
+        //Saves the entered deployment into the record store
+        //If the user chooses to save the deployment a restart will be needed
         container.addComponent(createButton(I18N.s("Save"), new ActionListener() {
             public void actionPerformed(ActionEvent ae)
             {

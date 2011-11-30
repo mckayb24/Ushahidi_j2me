@@ -16,6 +16,15 @@ import ushahidi.core.I18N;
  */
 public class ReportForm extends Base {
 
+    /**
+     * This method creates an instance of the ReportForm class.
+     * The ReportForm class displays the details of a report
+     * @pre Report != null
+     * @pre app must exist
+     * @post Creates an instance of the ReportForm class
+     * @param App app
+     * @param Report newReport : this is the report to be displayed
+     */
     public ReportForm(final App app, Report newReport) {
         super(I18N.s(newReport.getTitle()));
 
@@ -36,6 +45,7 @@ public class ReportForm extends Base {
         container.addComponent(cityText);
         
         this.addComponent(BorderLayout.CENTER, container);
+        
         addCommand(new Command(I18N.s("back")) {
             public void actionPerformed(ActionEvent ev) {
                 app.showReports(false);

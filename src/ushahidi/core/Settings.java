@@ -32,7 +32,12 @@ public class Settings {
     }
 
 
-
+    /**
+     * This method saves the url for a deployment in the record store
+     * @pre deployment != null
+     * @post returns the recordID number and the deployment is saved in the record store
+     * @param String deployment
+     */
     public int saveDeployment(String deployment)
     {
         RecordStore rs = null;
@@ -92,6 +97,11 @@ public class Settings {
         return recordID;
     }
 
+    /**
+     * This method gets the deployments from the record store
+     * @pre none
+     * @post an array of strings is returned with all of the saved deployments
+     */
     public String[] getDeployment()
     {
         ByteArrayInputStream inputByteStream;
@@ -107,10 +117,11 @@ public class Settings {
                 inputByteStream = new ByteArrayInputStream(settings);
                 reader = new DataInputStream(inputByteStream);
 
+                //to limit confusion currently allows only one deployment to be returned
+                //eventually should be implemented to allow more
+                deployments = new String[1];
                 if(rs.getNumRecords() != 0)
                 {
-                    deployments = new String[1];
-
                     deployments[0] = reader.readUTF();
                 }
             }

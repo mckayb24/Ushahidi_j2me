@@ -18,7 +18,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 /**
  *
- * @author user
+ * @author Brett McKay
  */
 public class Instance {
     private HttpConnection connection;
@@ -28,16 +28,29 @@ public class Instance {
     private Report newReport;
     private int catFlag;
     private Vector reports;
+    private String urls[];
 
+    /**
+     * This method creates an instance of the Instance class.
+     * The Instance class parses the Ushahidi incidents api into reports
+     * @pre none
+     * @post Creates an instance of the Instance class
+     */
     public Instance()
     {
         settings = new Settings();
         reports = new Vector();
+        urls = new String[1];
         catFlag = 0;
         
         try
         {
-            this.parse(settings.getDeployment()[0], "api?task=incidents&by=all");
+            urls = settings.getDeployment();
+            System.out.println(urls);
+            if(urls != null)
+            {
+                this.parse(urls[0], "api?task=incidents&by=all");
+            }
         }
         catch(IOException ex)
         {
@@ -45,25 +58,39 @@ public class Instance {
         }
     }
 
+    /**
+     * This method parses the Ushahidi incidents api into reports
+     * @pre String url is a valid Ushahidi deployment url
+     * @pre String heading is a valid Ushahidi api heading
+     * @post The Vector reports contains a list of reports
+     * @param String url, String heading
+     */
     public void parse(String url, String heading) throws IOException
     {
-        connection = (HttpConnection) Connector.open("http://haiti.ushahidi.com/api?task=incidents&by=all&resp=xml");
-        //connection = (HttpConnection) Connector.open(url+heading+"&resp=xml");
+        //uncomment next line and comment out the line after that to hard code a deployment
+        //connection = (HttpConnection) Connector.open("http://haiti.ushahidi.com/api?task=incidents&by=all&resp=xml");
+
+        //sets up the connection to the ushahidi deployment
+        connection = (HttpConnection) Connector.open(url+heading+"&resp=xml");
         parser = new KXmlParser();
         inputStream = connection.openInputStream();
         InputStreamReader is = new InputStreamReader(inputStream);
+
         try
         {
             parser.setInput(is);
             parser.nextTag();
             parser.require(XmlPullParser.START_TAG, null, "response");
 
+            //pulls out all of the reports from the incidents api
             while(parser.next() != XmlPullParser.END_DOCUMENT)
             {
                if(parser.getEventType() == XmlPullParser.START_TAG)
                {
                    if(parser.getName().equals("incident"))
                    {
+                       //when the catFlag is 1 the parser has made it to
+                       //the category tag so the whole incident has been seen
                        if(catFlag == 1)
                        {
                             catFlag = 0;
@@ -72,39 +99,33 @@ public class Instance {
                        newReport = new Report();
                        parser.nextTag();
                    }
-                   if(parser.getName().equals("id"))
-                   {
-                       //System.out.println("id "+parser.nextText());
-                   }
                    if(parser.getName().equals("title"))
                    {
+                       //There are two title flags one for the incident itself and
+                       //another for the category
+                       //this makes sure they are saved appropriatley
                        if(catFlag == 0)
                        {
                             newReport.setTitle(parser.nextText());
-                            //System.out.println("title "+parser.nextText());
                             catFlag = 1;
                        }
                        else
                        {
                            newReport.addCategory(parser.nextText());
-                           //System.out.println("title "+parser.nextText());
                        }
 
                    }
                    if(parser.getName().equals("description"))
                    {
                        newReport.setDescription(parser.nextText());
-                       //System.out.println("description "+parser.nextText());
                    }
                    if(parser.getName().equals("date"))
                    {
                        newReport.setDate(parser.nextText());
-                       //System.out.println("date "+parser.nextText());
                    }
                    if(parser.getName().equals("name"))
                    {
                        newReport.setCity(parser.nextText());
-                       //System.out.println("name "+parser.nextText());
                    }
                }
             }
@@ -120,17 +141,33 @@ public class Instance {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * This method gets the title of the report in the list of reports
+     * located at the index location
+     * @pre index > 0 && index < number of reports
+     * @post returns the title of the report as a string
+     * @param int index
+     */
     public String getTitle(int index)
     {
         return ((Report) reports.elementAt(index)).getTitle();
     }
 
+    /**
+     * This method returns the number of reports in the instance
+     */
     public int getsize()
     {
         return reports.size();
     }
 
+    /**
+     * This method returns the report from the list of reports
+     * located at the index
+     * @pre index > 0 && index < number of reports
+     * @post returns the requested report
+     * @param int index
+     */
     public Report getReport(int index)
     {
         return ((Report) reports.elementAt(index));
